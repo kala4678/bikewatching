@@ -13,6 +13,10 @@ const map = new mapboxgl.Map({
 });
 
 const svg = d3.select('#map').select('svg');
+let stationFlow = d3
+  .scaleQuantize()
+  .domain([0, 1])
+  .range([0, 0.5, 1]);
 
 function getCoords(station) {
   const point = new mapboxgl.LngLat(+station.lon, +station.lat);
@@ -137,6 +141,9 @@ map.on('load', async () => {
     .attr('r', (d) =>
       radiusScale(d.totalTraffic)
     )
+      .style('--departure-ratio', (d) =>
+    stationFlow(d.departures / d.totalTraffic)
+    )
 
     .each(function (d) {
       d3.select(this)
@@ -168,13 +175,11 @@ map.on('load', async () => {
       : radiusScale.range([3, 50]);
 
     circles
-      .data(
-        filteredStations,
-        (d) => d.short_name
-      )
-      .attr('r', (d) =>
-        radiusScale(d.totalTraffic)
-      );
+  .data(filteredStations, (d) => d.short_name)
+  .attr('r', (d) => radiusScale(d.totalTraffic))
+  .style('--departure-ratio', (d) =>
+    stationFlow(d.departures / d.totalTraffic)
+  );
   }
 
   const timeSlider =

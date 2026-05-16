@@ -12,10 +12,63 @@
   pointer-events: none;
 }
 
+/* Shared color variables */
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+/* Station circles */
 circle {
-  fill: steelblue;
+  fill: var(--color);
+
   fill-opacity: 0.6;
+
   stroke: white;
+
   stroke-width: 1;
+
   pointer-events: auto;
+}
+
+/* Legend container */
+.legend {
+  display: flex;
+
+  gap: 1px;
+
+  margin-block: 1em;
+}
+
+/* Legend items */
+.legend > div {
+  flex: 1;
+
+  background: var(--color);
+
+  color: white;
+
+  padding: 0.5em 1em;
+
+  font-size: 0.9em;
+}
+
+/* Text alignment */
+.legend > div:nth-child(1) {
+  text-align: left;
+}
+
+.legend > div:nth-child(2) {
+  text-align: center;
+}
+
+.legend > div:nth-child(3) {
+  text-align: right;
 }
