@@ -1,0 +1,22 @@
+body {
+  font: 100%/1.5 system-ui, sans-serif;
+  margin: auto;
+  padding: 1em;
+  max-width: 80em;
+}
+
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+}
+
+label {
+  margin-left: auto;
+}
+
+time,
+em {
+  display: block;
+  text-align: right;
+}
